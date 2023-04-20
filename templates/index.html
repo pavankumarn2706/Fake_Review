@@ -15,26 +15,99 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title>URL REVIEW</title>
-
+    <style>
+    body{
+    background-color: grey;
+}
+    form{
+    width: 400px;
+    background-color: rgba(255, 255, 255, 0.785);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+}
+form *{
+  background-color: rgba(255,255,255,0.13);
+    font-family: 'Poppins',sans-serif;
+    color: black;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+form h1{
+  background-color: #007bff;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    text-align: center;
+}
+input{
+    height: 50px;
+    width: 100%;
+    background-color: rgb(207, 207, 207);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+}
+label{
+    display: block;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+    </style>
 </head>
 <body>
   <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm" id="pillNav2" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
     <li class="nav-item" role="presentation">
       <a href="" class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Home</a>
+    </li> 
+    {% if user.is_authenticated %}
+    <li class="nav-item" role="presentation">
+      <a href="logout" class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Logout</a>
+    </li> 
+    {% else %} 
+     <li class="nav-item" role="presentation">
+      <a href="{% url 'signup' %}" class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Signup</a>
     </li>
+    <li class="nav-item" role="presentation">
+      <a href="login" class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Login</a>
+    </li>
+    {% endif %}    
   </ul>
-  <div class="container">
-    <h1 class="text-center mt-4 mb-5">URL Search</h1>
-        <form class="form-group row" action="extract_review" method="post">
-            {% csrf_token %}
-            <div class="col-md-6">
+  <div class="">
+    {% if user.is_authenticated %}
+    <h3 class="text-center">Welcome {{user.first_name}} Your Role is {{user_details.role}}</h3>
+    {% endif %}
+        <form class="form-group" action="extract_review" method="post">
+          {% csrf_token %}
+          <h1 class="text-center mt-4 mb-5">URL Search</h1>
+            <div class="col">
             <label for="url">Flipkart Product URL:</label>
-            <input type="link" id="url" name="url" pattern="(http|https)://(www\.)?flipkart\.com/.*" required>
+            <input class="border-info"type="link" id="url" name="url" pattern="(http|https)://(www\.)?flipkart\.com/.*" required>
             <br><br>
             <label for="url">Number Of Pages</label>
             <input type="number" id="n" name="n" required>
             <br>
+            {% if user.is_authenticated %}
             <input class="btn btn-outline-primary" type="submit" value="Submit">
+            {% else %}
+            <label for="text">Signup or Login to Search for Result</label>
+            <li class="nav-item" role="presentation">
+              <a href="{% url 'signup' %}" class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Signup</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a href="login" class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Login</a>
+            </li>
+            {% endif %}
           </div>
           </form>          
   </div>

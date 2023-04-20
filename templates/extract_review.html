@@ -15,7 +15,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title>URL REVIEW</title>
-
+<style>
+body{
+    background-color: whitesmoke;
+}
+</style>
 </head>
 <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm" id="pillNav2" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
     <li class="nav-item" role="presentation">
@@ -23,14 +27,14 @@
     </li>
   </ul>
 <center>
-<h1>extracted review data</h1>
+<h1 class="bd-title">Extracted review data</h1>
 <div>
     <h1> <a href="{{url}}">
         {{product_name}}
     </a>
     </h1>
 </div>
-<div>
+<div class="img">
     <img src="{{product_img}}" alt="">
 </div>
 <div>
@@ -38,20 +42,38 @@
     <h3>{{product_price}}</h3>
 </div>
 </center>
+<!-- {% if user_details.role == user %} -->
+
+<div class="well">
+    <p>Real Reviews = {{R_P}}</p>
+</div>
+<div class="well">
+    <p>Fake Reviews = {{F_P}}</p>
+</div>
+<!-- {% else %} -->
 <div class="table">
 <table class="table">
-    <thead>
-        <th>ID</th>
+    <thead class="thead-dark">
+        <th class="table-active">ID</th>
+        <th>User Name</th>
         <th>Title</th>
         <th>Content</th>
+        <th>Status</th>
     </thead>
 {% for review in reviews %} 
     <tbody>
-        <td>{{ forloop.counter }}</td>
+        <td class="table-active">{{ forloop.counter }}</td>
+        <td>{{review.user_name}}</td>
         <td>{{review.title}}</td>
         <td>{{review.content}}</td>
+        {% if review.Status == "REAL" %}
+        <td class='table-primary'>{{review.Status }}</td>
+        {% else %}
+        <td class='table-danger'>{{review.Status }}</td>
+        {% endif %}
     </tbody>
 {% endfor %}
+<!-- {% endif %} -->
 </table>
 </div>
     

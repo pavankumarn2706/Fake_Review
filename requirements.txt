@@ -1,5 +1,4 @@
 bs4
-re
 requests
 pandas
 numpy

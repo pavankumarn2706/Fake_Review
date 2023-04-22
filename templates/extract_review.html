@@ -19,15 +19,39 @@
 body{
     background-color: whitesmoke;
 }
+ .well, .well1 {
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+    line-height: 100px;
+    font-weight: bold;
+    font-size: 20px;
+    justify-self: center;
+}
+
+.well {
+    background-color: green;
+}
+
+.well1 {
+    background-color: red;
+    margin-left: 20px;
+} */
+
 </style>
 </head>
 <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm" id="pillNav2" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
     <li class="nav-item" role="presentation">
-      <a href="" class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Home</a>
+      <a href="{% url 'index' %}" class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Home</a>
     </li>
+    {% if user_details.role == 'admin' %}
+    <li class="nav-item" role="presentation">
+        <a href="{% url 'check' %}" class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Check</a>
+      </li>
+    {% endif %}
   </ul>
 <center>
-<h1 class="bd-title">Extracted review data</h1>
+<h1 class="bd-title" style="border: steelblue;color: rgb(113, 113, 245);">Review data</h1>
 <div>
     <h1> <a href="{{url}}">
         {{product_name}}
@@ -42,15 +66,18 @@ body{
     <h3>{{product_price}}</h3>
 </div>
 </center>
-<!-- {% if user_details.role == user %} -->
-
+<div class="container">
+    <center>
+{% if user_details.role != "admin" %}
 <div class="well">
-    <p>Real Reviews = {{R_P}}</p>
+    <p>Real Reviews = {{R_P}} %</p>
 </div>
-<div class="well">
-    <p>Fake Reviews = {{F_P}}</p>
+<div class="well1">
+    <p>Fake Reviews = {{F_P}} %</p>
 </div>
-<!-- {% else %} -->
+    </center>
+</div>
+{% else %}
 <div class="table">
 <table class="table">
     <thead class="thead-dark">
@@ -73,7 +100,7 @@ body{
         {% endif %}
     </tbody>
 {% endfor %}
-<!-- {% endif %} -->
+{% endif %}
 </table>
 </div>
     

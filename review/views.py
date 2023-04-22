@@ -132,11 +132,10 @@ def extract_review(request):
         fake_count = np.count_nonzero(Status == 'FAKE')
 
         total_count = len(Status)
-        Real_percentage = ((real_count/total_count)*100,2)
-        Fake_percentage = ((fake_count/total_count)*100,2)
+        Real_percentage = ((real_count/total_count)*100)
+        Fake_percentage = ((fake_count/total_count)*100)
         if request.user.username:
             user_details = models.user.objects.get(username=request.user.username)
-
         context = {'reviews': reviews, 'product_name': product_name, 'product_img': product_img, 'product_price': product_price, 'url': url,'R_P':Real_percentage, 'F_P':Fake_percentage, 'user_details': user_details}
         return render(request, 'extract_review.html', context)
     else:
@@ -153,3 +152,12 @@ def load_model():
     model = joblib.load('../fake_review/CSV/classifier.pkl')
     return model
 
+def check(request):
+    if request.method=='POST':
+        text = request.POST['text']
+        model = load_model()
+        Status = model.predict([text])
+        context = {'Status':Status}
+        return render(request, 'reviewchecker.html', context)
+    else:
+        return render(request, 'reviewchecker.html')

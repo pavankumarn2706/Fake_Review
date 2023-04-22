@@ -68,7 +68,7 @@ label{
 <body>
   <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm" id="pillNav2" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
     <li class="nav-item" role="presentation">
-      <a href="" class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Home</a>
+      <a href="{% url 'extract_review' %}" class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true"> Back</a>
     </li> 
     {% if user.is_authenticated %}
     <li class="nav-item" role="presentation">
@@ -87,29 +87,31 @@ label{
     {% if user.is_authenticated %}
     <h3 class="text-center">Welcome {{user.first_name}} Your Role is {{user_details.role}}</h3>
     {% endif %}
-        <form class="form-group" action="extract_review" method="post">
+        <form class="form-group" action="check" method="post">
           {% csrf_token %}
-          <h1 class="text-center mt-4 mb-5">URL Search</h1>
+          <h1 class="text-center mt-4 mb-5">Review Checker</h1>
             <div class="col">
-            <label for="url">Flipkart Product URL:</label>
-            <input class="border-info"type="link" id="url" name="url" pattern="(http|https)://(www\.)?flipkart\.com/.*" required>
+            <label for="url">Review Text:</label>
+            <input class="border-info"type="text" id="text" name="text" required style="height: 100px;">
             <br><br>
-            <label for="url">Number Of Pages</label>
-            <input type="number" id="n" name="n" required>
-            <br>
             {% if user.is_authenticated %}
             <input class="btn btn-outline-primary" type="submit" value="Submit">
+            {% if Status.0 == "REAL" %}
+            <Center><h3 style="background-color: green;color: wheat;">{{Status.0}}</h3></Center>
+            {% else %}
+            <center><h3 style="background-color: red;color: white;">{{Status.0}}</h3></center>
+            {% endif %}
             {% else %}
             <label for="text">Signup or Login to Search for Result</label>
             <li class="nav-item" role="presentation">
               <a href="{% url 'signup' %}" class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Signup</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a href="login" class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Login</a>
+              <a href="{% url 'login' %}" class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Login</a>
             </li>
             {% endif %}
           </div>
-          </form>          
+          </form>
   </div>
 </body>
 </html>

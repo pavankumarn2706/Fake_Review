@@ -1,0 +1,9 @@
+bs4
+re
+requests
+pandas
+numpy
+scikit-learn
+seaborn
+nltk
+utils
